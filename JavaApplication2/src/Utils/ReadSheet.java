@@ -27,17 +27,19 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.commons.io.FilenameUtils;
 
-public class ReadSheet {
+public final class ReadSheet {
 
     /**
      * @param args the command line arguments
      * @throws java.lang.Exception
      */
     
-    static HSSFRow row;
+    private ReadSheet (){}
+    
     
     public static void ReadSheet(String arquivo) throws Exception
     {
+        HSSFRow row;
         File filename = new File(arquivo);
         FileInputStream isr = new FileInputStream(filename);
         Workbook workbook;
