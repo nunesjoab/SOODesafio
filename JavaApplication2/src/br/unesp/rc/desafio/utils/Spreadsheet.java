@@ -93,15 +93,24 @@ to a xls(x) file. The method choose a method to read according extension.
             Iterator < Cell > cellIterator = row.cellIterator();
             while ( cellIterator.hasNext()){
                 Cell cell = cellIterator.next();
-            
-                switch (cell.getCellType()){
-                    case Cell.CELL_TYPE_NUMERIC:
-                        System.out.print(cell.getNumericCellValue() + " \t\t " );
-                    break;
-                    case Cell.CELL_TYPE_STRING:
-                        System.out.print(cell.getStringCellValue() + " \t\t " );
-                    break;
+                String cellValue = "";
+                switch (cell.getCellTypeEnum()){
+                    default:
+                        cellValue = cell.getCellFormula();
+                        cell.setCellType(CellType.STRING);
+                        cell.setCellValue(cellValue);
+                        break;
+                    case NUMERIC:
+                        cellValue = Double.toString(cell.getNumericCellValue());
+                        cell.setCellType(CellType.STRING);
+                        cell.setCellValue(cellValue);
+                    case BLANK:
+                        break;
+                    case STRING:
+                        break;
                 }
+                
+                System.out.print(cell.getStringCellValue() + " \t\t " );
             }
             System.out.println();
         }
@@ -141,16 +150,21 @@ to a xls(x) file. The method choose a method to read according extension.
             row1 = (XSSFRow) rowItr.next();
             Iterator < Cell > cellIterator = row1.cellIterator();
             while ( cellIterator.hasNext()){
+                String cellValue = "";
                 Cell cell = cellIterator.next();
             
-                switch (cell.getCellType()){
-                    case Cell.CELL_TYPE_NUMERIC:
-                        System.out.print(cell.getNumericCellValue() + " \t\t " );
-                    break;
-                    case Cell.CELL_TYPE_STRING:
-                        System.out.print(cell.getStringCellValue() + " \t\t " );
-                    break;
+                switch (cell.getCellTypeEnum()){
+                    default:
+                        cellValue = cell.getCellFormula();
+                        cell.setCellType(CellType.STRING);
+                        cell.setCellValue(cellValue);
+                        break;
+                    case BLANK:
+                        break;
+                    case STRING:
+                        break;
                 }
+                System.out.print(cell.getStringCellValue() + " \t\t " );
             }
             System.out.println();
         }
