@@ -6,11 +6,12 @@
 package main;
 
 
-import br.unesp.rc.desafio.utils.Spreadsheet.*;
 import static br.unesp.rc.desafio.utils.Spreadsheet.ChooseSpreadsheetFormat;
+import br.unesp.rc.desafio.visao.Notas;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,14 +28,18 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        ArrayList<String> spreadsheetData = new ArrayList<String>();
         
         System.out.println("Digite o caminho do arquivo: ");
         Scanner in =new Scanner(System.in);
         String input = in.nextLine();
         
-        ChooseSpreadsheetFormat(input);
+        spreadsheetData = ChooseSpreadsheetFormat(input);
+        Notas frame = new Notas();
+        frame.pack();
+        frame.setVisible(true);
         
-        
+        frame.setValuesIntoPanel(spreadsheetData);
     }
     
 }

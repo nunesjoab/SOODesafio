@@ -10,6 +10,9 @@ package br.unesp.rc.desafio.utils;
  * @author Joab
  */
 
+
+import br.unesp.rc.desafio.visao.Notas.*;
+import java.awt.Component;
 import java.io.File;
 import org.apache.commons.io.FilenameUtils;
 import java.io.FileInputStream;
@@ -18,8 +21,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -49,26 +54,29 @@ public class Spreadsheet {
 to a xls(x) file. The method choose a method to read according extension.
     */
     
-    public static void ChooseSpreadsheetFormat(String fullpath){
+    public static ArrayList<String> ChooseSpreadsheetFormat(String fullpath){
         
+        ArrayList<String> spreadsheetValues = new ArrayList<String>();
         
         if (FilenameUtils.getExtension(fullpath).equalsIgnoreCase("xls")) {
             File spreadsheet = new File(fullpath);
-            ReadXlsSpreadsheet(spreadsheet);
+            spreadsheetValues = ReadXlsSpreadsheet(spreadsheet);
         } else if (FilenameUtils.getExtension(fullpath).equalsIgnoreCase("xlsx")) {
             File spreadsheet = new File(fullpath);
-            ReadXlsxSpreadsheet(spreadsheet);
+            spreadsheetValues = ReadXlsxSpreadsheet(spreadsheet);
         } else {
             throw new IllegalArgumentException(fullpath +"Arquivo não é do tipo excel");
-
         }
+        
+        return spreadsheetValues;
     }
     
-    public static void ReadXlsSpreadsheet(File spreadsheet){
+    public static ArrayList<String> ReadXlsSpreadsheet(File spreadsheet){
         
         /*
         Constructing File
         */
+        ArrayList values = new ArrayList<String>();
         FileInputStream inputStr = null;
         try {
             inputStr = new FileInputStream(spreadsheet);
@@ -110,6 +118,7 @@ to a xls(x) file. The method choose a method to read according extension.
                         break;
                 }
                 
+                values.add(cell.getStringCellValue());
                 System.out.print(cell.getStringCellValue() + " \t\t " );
             }
             System.out.println();
@@ -119,14 +128,17 @@ to a xls(x) file. The method choose a method to read according extension.
         } catch (IOException ex) {
             Logger.getLogger(Spreadsheet.class.getName()).log(Level.SEVERE, null, ex);
         }       
+        
+        return values;
     }
     
     
-    public static void ReadXlsxSpreadsheet(File spreadsheet){
+    public static ArrayList<String> ReadXlsxSpreadsheet(File spreadsheet){
         
         /*
         Constructing File
         */
+        ArrayList values = new ArrayList<String> ();
         FileInputStream inputStr = null;
         try {
             inputStr = new FileInputStream(spreadsheet);
@@ -164,6 +176,7 @@ to a xls(x) file. The method choose a method to read according extension.
                     case STRING:
                         break;
                 }
+                values.add(cell.getStringCellValue());
                 System.out.print(cell.getStringCellValue() + " \t\t " );
             }
             System.out.println();
@@ -173,8 +186,8 @@ to a xls(x) file. The method choose a method to read according extension.
         } catch (IOException ex) {
             Logger.getLogger(Spreadsheet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return values;
     }
-    
-    
     
 }
