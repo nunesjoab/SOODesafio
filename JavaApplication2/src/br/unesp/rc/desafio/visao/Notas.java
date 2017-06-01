@@ -143,17 +143,24 @@ public class Notas extends javax.swing.JFrame {
         String nome=new String();
         String handler=new String();
         entrada=jTextArea1.getText();
+        ArrayList<String> col = new ArrayList<String>();
+        int i;
         DefaultCategoryDataset dataset =new DefaultCategoryDataset();
-      
+       
         
-        for (String retval: entrada.split(";")) {
-            int i=1;
-            String[] retval2= retval.split(",");
-             nome=retval2[0];
+        String[] retval=entrada.split(";");
+        for(String col_n: retval[0].split(",")) {  
+          col.add(col_n);
+        }
+            
+            for(i=1;i<retval.length;i++){
+            String[] retval2= retval[i].split(",");
+               nome=retval2[0];
              System.out.println(nome);
-             while(i<retval2.length){
-            dataset.setValue(Float.parseFloat(retval2[i]),nome, String.valueOf(i));
-            i++;
+             for(int j=1;j<retval2.length;j++){
+               
+            dataset.setValue(Float.parseFloat(retval2[j]),nome, col.get(j));
+            
              }
         
         }
@@ -196,8 +203,8 @@ public class Notas extends javax.swing.JFrame {
         String input = in.nextLine();
         
         spreadsheetData = ChooseSpreadsheetFormat(input);
-       int i=10;
-        System.out.println(spreadsheetData.get(i));
+       int i=0;
+        //stem.out.println(spreadsheetData.get(i));
        while(i<spreadsheetData.size()){
            jTextArea1.append(spreadsheetData.get(i));
            //jTextArea1.setText(Integer.toString(i));

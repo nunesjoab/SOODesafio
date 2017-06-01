@@ -125,7 +125,7 @@ to a xls(x) file. The method choose a method to read according extension.
                }
                 else{
                     values.add("0");
-                    values.add(",");
+                   values.add(",");
                    // System.out.println("OBJECTION!!");
                 }
                 //System.out.print(cell.getStringCellValue() + " \t\t " );
