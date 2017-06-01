@@ -104,7 +104,8 @@ to a xls(x) file. The method choose a method to read according extension.
                 String cellValue = "";
                 switch (cell.getCellTypeEnum()){
                     default:
-                        cellValue = cell.getCellFormula();
+                       // cellValue = cell.getCellFormula();
+                        cellValue = Double.toString(cell.getNumericCellValue());
                         cell.setCellType(CellType.STRING);
                         cell.setCellValue(cellValue);
                         break;
@@ -117,18 +118,29 @@ to a xls(x) file. The method choose a method to read according extension.
                     case STRING:
                         break;
                 }
-                
+               if(!cell.getStringCellValue().isEmpty()){
                 values.add(cell.getStringCellValue());
-                System.out.print(cell.getStringCellValue() + " \t\t " );
+                values.add(",");
+                // System.out.println("HOLD IT");
+               }
+                else{
+                    values.add("0");
+                    values.add(",");
+                   // System.out.println("OBJECTION!!");
+                }
+                //System.out.print(cell.getStringCellValue() + " \t\t " );
             }
-            System.out.println();
+            //System.out.println();
+            values.add(";");
+          
         }
+        
         try {
             inputStr.close();
         } catch (IOException ex) {
             Logger.getLogger(Spreadsheet.class.getName()).log(Level.SEVERE, null, ex);
         }       
-        
+        //System.out.println(values.get(0));
         return values;
     }
     

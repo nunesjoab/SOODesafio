@@ -5,13 +5,11 @@
  */
 package br.unesp.rc.desafio.visao;
 
-import java.awt.Component;
+import static br.unesp.rc.desafio.utils.Spreadsheet.ChooseSpreadsheetFormat;
+import static br.unesp.rc.desafio.utils.Utils.createBar;
 import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.text.JTextComponent;
-import javax.swing.text.html.HTMLDocument.Iterator;
+import java.util.Scanner;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -25,6 +23,8 @@ public class Notas extends javax.swing.JFrame {
     public Notas() {
         initComponents();
         ManagerGUI.centralizar(this);
+       
+        setValuesIntoPanel();
     }
 
     /**
@@ -137,18 +137,28 @@ public class Notas extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        /*
-        int i=0;
+        
+        
         String entrada = new String();
-        entrada=Entradatxt.getText();
+        String nome=new String();
+        String handler=new String();
+        entrada=jTextArea1.getText();
         DefaultCategoryDataset dataset =new DefaultCategoryDataset();
-        for (String retval: entrada.split(",")) {
-
-            dataset.setValue(Integer.parseInt(retval),"Grafico", String.valueOf(i));
+      
+        
+        for (String retval: entrada.split(";")) {
+            int i=1;
+            String[] retval2= retval.split(",");
+             nome=retval2[0];
+             System.out.println(nome);
+             while(i<retval2.length){
+            dataset.setValue(Float.parseFloat(retval2[i]),nome, String.valueOf(i));
             i++;
+             }
+        
         }
         createBar(dataset);
-        */
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -164,21 +174,35 @@ public class Notas extends javax.swing.JFrame {
         */
     }//GEN-LAST:event_jButton1ActionPerformed
     
-    public void setValuesIntoPanel(ArrayList<String> values){
+    public void setValuesIntoPanel(){
          //System.out.println("Entrou");
-        JTextArea textArea = new JTextArea();
-        Component[] components = MainPanel.getComponents();
+       // JTextArea textArea = new JTextArea();
+        //Component[] components = MainPanel.getComponents();
 
-        for (Component component : components) {
-            if (component.getClass().equals(JTextArea.class)) {
-                textArea.add((JTextArea)component);
-            }
-        }
-        for(int i = 0; i < textField.size(); i++){
-            textField.get(i).setText(values.get(i));
+       // for (Component component : components) {
+           // if (component.getClass().equals(JTextArea.class)) {
+               // textArea.add((JTextArea)component);
+           // }
+       // }
+       // for(int i = 0; i < textField.size(); i++){
+           // textField.get(i).setText(values.get(i));
             //String field = textField.get(i).getText();
             //System.out.println("Texto do campo texto " + i + ": " + field);
-        }
+       // }
+          ArrayList<String> spreadsheetData = new ArrayList<String>();
+        
+        System.out.println("Digite o caminho do arquivo: ");
+        Scanner in =new Scanner(System.in);
+        String input = in.nextLine();
+        
+        spreadsheetData = ChooseSpreadsheetFormat(input);
+       int i=10;
+        System.out.println(spreadsheetData.get(i));
+       while(i<spreadsheetData.size()){
+           jTextArea1.append(spreadsheetData.get(i));
+           //jTextArea1.setText(Integer.toString(i));
+           i++;
+       }
     }
     
         
